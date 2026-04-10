@@ -1,5 +1,7 @@
 'use client'
 
+import { trackEvent } from '@/lib/analytics'
+
 interface RelatedGame {
   id: string
   name: string
@@ -20,6 +22,12 @@ export function GameSidebar({ games }: GameSidebarProps) {
           <a
             key={game.id}
             href={game.url}
+            onClick={() =>
+              trackEvent('related_game_click', {
+                source: 'sidebar',
+                game_id: game.id,
+                game_name: game.name,
+              })}
             className="group relative aspect-square rounded-lg overflow-hidden bg-gray-900 hover:ring-2 hover:ring-red-500 transition-all"
           >
             <img

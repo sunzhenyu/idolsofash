@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { AlertTriangle, ExternalLink, Maximize2, Minimize2, Play, ShieldCheck } from 'lucide-react'
 import type { GameAccessMode, SourceStatus } from '@/data/games-database'
+import { trackEvent } from '@/lib/analytics'
 
 interface GamePlayerProps {
   gameName?: string
@@ -57,6 +58,7 @@ export function GamePlayer({
   const [isLoading, setIsLoading] = useState(true)
   const [hasStarted, setHasStarted] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [hasTrackedLoad, setHasTrackedLoad] = useState(false)
 
   const canPlay = (accessMode === 'trusted-embed' || accessMode === 'mirror-embed') && Boolean(gameUrl)
   const status = statusStyles[sourceStatus]
@@ -67,10 +69,18 @@ export function GamePlayer({
     if (!document.fullscreenElement) {
       container?.requestFullscreen()
       setIsFullscreen(true)
+      trackEvent('fullscreen_toggle', {
+        game_name: gameName,
+        fullscreen: true,
+      })
       return
     }
     document.exitFullscreen()
     setIsFullscreen(false)
+    trackEvent('fullscreen_toggle', {
+      game_name: gameName,
+      fullscreen: false,
+    })
   }
 
   return (
@@ -137,6 +147,11 @@ export function GamePlayer({
                   href={sourceUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() =>
+                    trackEvent('source_link_click', {
+                      game_name: gameName,
+                      link_type: 'embed_source',
+                    })}
                   className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-5 py-3 font-semibold text-emerald-100 transition-colors hover:bg-emerald-500/20"
                 >
                   Open embed source
@@ -148,6 +163,11 @@ export function GamePlayer({
                   href={officialUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() =>
+                    trackEvent('source_link_click', {
+                      game_name: gameName,
+                      link_type: 'official',
+                    })}
                   className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition-colors hover:bg-red-500"
                 >
                   Open official page
@@ -159,6 +179,11 @@ export function GamePlayer({
                   href={steamUrl}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() =>
+                    trackEvent('source_link_click', {
+                      game_name: gameName,
+                      link_type: 'steam',
+                    })}
                   className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-5 py-3 font-semibold text-white transition-colors hover:bg-white/10"
                 >
                   View Steam listing
@@ -174,7 +199,14 @@ export function GamePlayer({
             {!hasStarted && (
               <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/75">
                 <button
-                  onClick={() => setHasStarted(true)}
+                  onClick={() => {
+                    setHasStarted(true)
+                    trackEvent('play_click', {
+                      game_name: gameName,
+                      access_mode: accessMode,
+                      source_status: sourceStatus,
+                    })
+                  }}
                   className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-red-500"
                 >
                   <Play className="h-5 w-5" />
@@ -200,7 +232,16 @@ export function GamePlayer({
                   className="h-full w-full"
                   allow="fullscreen; autoplay; gamepad; gyroscope; accelerometer"
                   allowFullScreen
-                  onLoad={() => setIsLoading(false)}
+                  onLoad={() => {
+                    setIsLoading(false)
+                    if (!hasTrackedLoad) {
+                      trackEvent('game_iframe_loaded', {
+                        game_name: gameName,
+                        source_status: sourceStatus,
+                      })
+                      setHasTrackedLoad(true)
+                    }
+                  }}
                 />
 
                 <button
