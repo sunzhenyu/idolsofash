@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Idols of Ash Portal
 
-## Getting Started
+A Next.js game portal focused on:
 
-First, run the development server:
+- Instant browser play when a source is available.
+- Source transparency (verified embed vs mirror vs official external links).
+- English-only SEO content blocks for traffic growth (How to Play, Pro Tips, FAQ, JSON-LD).
+
+## Current Positioning
+
+This project is designed as a playable traffic portal, not only a link directory:
+
+- Keep users on-site with embedded game sessions.
+- Show source attribution and risk labels clearly.
+- Use per-game content depth to increase search visibility and session duration.
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- pnpm
+
+## Run Locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Default local URL:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `http://localhost:3000`
+- If `3000` is occupied, Next.js auto-switches (for example `3001`).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Useful Commands
 
-## Learn More
+```bash
+pnpm lint
+pnpm exec next build --webpack
+```
 
-To learn more about Next.js, take a look at the following resources:
+Notes:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- In restricted environments, `next build` with Turbopack may fail due to process/port restrictions.
+- `--webpack` build path is included as a stable fallback.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content and Source Strategy
 
-## Deploy on Vercel
+Each game entry in `src/data/games-database.ts` uses a source mode:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `trusted-embed`: verified playable source.
+- `mirror-embed`: playable third-party mirror with warning labels.
+- `official-external`: official source link only (no embedded play).
+- `info-only`: no reliable playable source yet.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For each game page, we show:
+
+- Source notes and rights notes.
+- Optional source-based description block.
+- Gameplay helper sections (How to Play, Pro Tips, FAQ).
+- FAQ structured data (`FAQPage` JSON-LD) for search indexing.
+
+## Project Structure
+
+```text
+src/
+  app/
+    page.tsx                 # homepage
+    games/[slug]/page.tsx    # dynamic game pages
+    horror-games/page.tsx    # category pages
+    hot-games/page.tsx
+    new-games/page.tsx
+  components/
+    game-player.tsx          # playable panel + source labels
+    header.tsx
+    related-games.tsx
+    game-sidebar.tsx
+  data/
+    games-database.ts        # full game registry
+    games.ts                 # related game list and category labels
+```
+
+## Adding New Games
+
+1. Add a new entry to `src/data/games-database.ts`.
+2. Add card metadata to `src/data/games.ts` if it should appear in related sections.
+3. Prefer official sources first.
+4. If using mirror embed, include:
+   - clear source URL,
+   - warning label (`sourceStatus: 'unverified-mirror'`),
+   - source notes with check date.
+
+## License and Disclaimer
+
+This is an unofficial fan portal.
+
+- All game IP, trademarks, and assets belong to their respective owners.
+- The site provides source transparency and gameplay access metadata, and does not claim ownership of third-party games.
