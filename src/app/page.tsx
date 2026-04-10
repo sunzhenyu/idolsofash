@@ -4,6 +4,7 @@ import { GameSidebar } from '@/components/game-sidebar'
 import { Header } from '@/components/header'
 import { relatedGames } from '@/data/games'
 import { getGameById } from '@/data/games-database'
+import { toAbsoluteUrl } from '@/lib/site'
 import type { Metadata } from 'next'
 
 const idolsOfAsh = getGameById('idols-of-ash')
@@ -18,6 +19,16 @@ export const metadata: Metadata = {
     description:
       'Trusted embed playback plus official links and a curated overview for Leafy Games\' horror climbing game.',
     type: 'website',
+    url: toAbsoluteUrl('/'),
+  },
+  alternates: {
+    canonical: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Idols of Ash - Play Online',
+    description:
+      'Trusted embed playback plus official links and a curated overview for Leafy Games\' horror climbing game.',
   },
 }
 

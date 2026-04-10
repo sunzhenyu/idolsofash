@@ -1,10 +1,25 @@
 import { Header } from '@/components/header'
 import { getAllGames } from '@/data/games-database'
+import { toAbsoluteUrl } from '@/lib/site'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Horror Games - Play Free Online Horror Games',
   description: 'Play the best free horror games online. Scary games, survival horror, and more.',
+  alternates: {
+    canonical: '/horror-games',
+  },
+  openGraph: {
+    title: 'Horror Games - Play Free Online Horror Games',
+    description: 'Play the best free horror games online. Scary games, survival horror, and more.',
+    type: 'website',
+    url: toAbsoluteUrl('/horror-games'),
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Horror Games - Play Free Online Horror Games',
+    description: 'Play the best free horror games online. Scary games, survival horror, and more.',
+  },
 }
 
 export default function HorrorGamesPage() {

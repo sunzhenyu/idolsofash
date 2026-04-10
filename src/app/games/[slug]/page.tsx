@@ -4,6 +4,7 @@ import { GameSidebar } from '@/components/game-sidebar'
 import { Header } from '@/components/header'
 import { relatedGames } from '@/data/games'
 import { getGameById, getAllGames } from '@/data/games-database'
+import { toAbsoluteUrl } from '@/lib/site'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -76,10 +77,25 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
     title: `Play ${game.name} Online Free - No Download`,
     description: `${game.accessSummary} Learn controls, tips, and FAQ for ${game.name}.`,
     keywords: [game.name, ...game.genre, 'play online free', 'no download', 'game guide', 'FAQ'],
+    alternates: {
+      canonical: `/games/${game.id}`,
+    },
     openGraph: {
       title: `Play ${game.name} Online Free`,
       description: `${game.accessSummary} English gameplay guide and FAQs included.`,
       type: 'website',
+      url: toAbsoluteUrl(`/games/${game.id}`),
+      images: [
+        {
+          url: game.image.startsWith('http') ? game.image : toAbsoluteUrl(game.image),
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Play ${game.name} Online Free`,
+      description: `${game.accessSummary} English gameplay guide and FAQs included.`,
+      images: [game.image.startsWith('http') ? game.image : toAbsoluteUrl(game.image)],
     },
   }
 }

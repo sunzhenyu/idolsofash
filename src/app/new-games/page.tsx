@@ -1,10 +1,25 @@
 import { Header } from '@/components/header'
 import { getAllGames } from '@/data/games-database'
+import { toAbsoluteUrl } from '@/lib/site'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'New Games - Play Latest Free Online Games',
   description: 'Play the newest free online games. Fresh releases and latest additions.',
+  alternates: {
+    canonical: '/new-games',
+  },
+  openGraph: {
+    title: 'New Games - Play Latest Free Online Games',
+    description: 'Play the newest free online games. Fresh releases and latest additions.',
+    type: 'website',
+    url: toAbsoluteUrl('/new-games'),
+  },
+  twitter: {
+    card: 'summary',
+    title: 'New Games - Play Latest Free Online Games',
+    description: 'Play the newest free online games. Fresh releases and latest additions.',
+  },
 }
 
 export default function NewGamesPage() {

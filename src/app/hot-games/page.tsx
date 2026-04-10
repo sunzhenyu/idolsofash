@@ -1,10 +1,25 @@
 import { Header } from '@/components/header'
 import { getAllGames } from '@/data/games-database'
+import { toAbsoluteUrl } from '@/lib/site'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Hot Games - Play Popular Free Online Games',
   description: 'Play the hottest and most popular free online games.',
+  alternates: {
+    canonical: '/hot-games',
+  },
+  openGraph: {
+    title: 'Hot Games - Play Popular Free Online Games',
+    description: 'Play the hottest and most popular free online games.',
+    type: 'website',
+    url: toAbsoluteUrl('/hot-games'),
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Hot Games - Play Popular Free Online Games',
+    description: 'Play the hottest and most popular free online games.',
+  },
 }
 
 export default function HotGamesPage() {

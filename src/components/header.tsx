@@ -9,7 +9,11 @@ export function Header() {
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <div className="text-white font-bold text-2xl whitespace-nowrap">IDOLS OF ASH</div>
+            <img
+              src="/logo-wordmark.svg"
+              alt="Idols of Ash"
+              className="h-11 w-auto md:h-12"
+            />
           </Link>
 
           {/* Navigation */}
