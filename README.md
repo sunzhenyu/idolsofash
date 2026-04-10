@@ -46,6 +46,32 @@ Notes:
 - In restricted environments, `next build` with Turbopack may fail due to process/port restrictions.
 - `--webpack` build path is included as a stable fallback.
 
+## SEO and Search Console
+
+This project now includes:
+
+- Dynamic `sitemap.xml` (static pages + all `/games/[slug]` pages).
+- Dynamic `robots.txt`.
+- Canonical URLs and Open Graph/Twitter metadata on main pages.
+- FAQ structured data on game detail pages.
+
+Before production deploy, set your domain:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+Or:
+
+```bash
+SITE_URL=https://your-domain.com
+```
+
+Then submit this URL in Google Search Console:
+
+- `https://your-domain.com/sitemap.xml`
+- Example for this project: `https://idolsash.com/sitemap.xml`
+
 ## Content and Source Strategy
 
 Each game entry in `src/data/games-database.ts` uses a source mode:
