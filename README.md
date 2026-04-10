@@ -1,4 +1,19 @@
+<div align="center">
+
 # Idols of Ash Portal
+
+**A playable browser gaming portal for Idols of Ash**
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-idolsash.com-brightgreen?style=flat)](https://idolsash.com)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+
+**[https://idolsash.com](https://idolsash.com)**
+
+</div>
+
+---
 
 A Next.js game portal focused on:
 
@@ -58,19 +73,14 @@ This project now includes:
 Before production deploy, set your domain:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_URL=https://idolsash.com
 ```
 
-Or:
+Then submit to Google Search Console:
 
-```bash
-SITE_URL=https://your-domain.com
 ```
-
-Then submit this URL in Google Search Console:
-
-- `https://your-domain.com/sitemap.xml`
-- Example for this project: `https://idolsash.com/sitemap.xml`
+https://idolsash.com/sitemap.xml
+```
 
 ## Content and Source Strategy
 
